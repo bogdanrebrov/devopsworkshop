@@ -49,7 +49,7 @@ func initDb() {
 		"password=%s dbname=%s sslmode=disable",
 		config[dbhost], config[dbport],
 		config[dbuser], config[dbpass], config[dbname])
-
+	
 	db, err = sql.Open("postgres", psqlInfo)
 	if err != nil {
 		panic(err)
@@ -59,6 +59,7 @@ func initDb() {
 		panic(err)
 	}
 	fmt.Println("Successfully connected!")
+
 }
 
 func dbConfig() map[string]string {
@@ -93,8 +94,7 @@ func dbConfig() map[string]string {
 
 func main() {
 	initDb()
-	createTable()
-
+	
 	store = &dbStore{db: db}
 
 	// Create router
@@ -102,16 +102,4 @@ func main() {
 
 	// Listen to the port. Go server's default port is 8080.
 	http.ListenAndServe(":8080", r)
-}
-
-func createTable() {
-	const qry = `
-	CREATE TABLE IF NOT EXISTS peopleinfo (
-	id serial PRIMARY KEY NOT NULL,
-	name character_vayring NOT NULL,
-	birthday character_vayring,
-	occupation haracter_vayring
-	
-)`
-
 }
