@@ -93,6 +93,7 @@ func dbConfig() map[string]string {
 
 func main() {
 	initDb()
+	createTable()
 
 	store = &dbStore{db: db}
 
@@ -101,4 +102,16 @@ func main() {
 
 	// Listen to the port. Go server's default port is 8080.
 	http.ListenAndServe(":8080", r)
+}
+
+func createTable() {
+	const qry = `
+	CREATE TABLE IF NOT EXISTS peopleinfo (
+	id serial PRIMARY KEY NOT NULL,
+	name character_vayring NOT NULL,
+	birthday character_vayring,
+	occupation haracter_vayring
+	
+)`
+
 }
