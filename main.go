@@ -64,14 +64,15 @@ func initDb() {
 
 func dbConfig() map[string]string {
 	conf := make(map[string]string)
-	host, ok := os.LookupEnv(dbhost)
-	if !ok {
-		panic("DBHOST environment variable required but not set")
-	}
 	port, ok := os.LookupEnv(dbport)
 	if !ok {
 		panic("DBPORT environment variable required but not set")
 	}
+	host, ok := os.LookupEnv(dbhost)
+	if !ok {
+		panic("DBHOST environment variable required but not set")
+	}
+	
 	user, ok := os.LookupEnv(dbuser)
 	if !ok {
 		panic("DBUSER environment variable required but not set")
@@ -103,3 +104,5 @@ func main() {
 	// Listen to the port. Go server's default port is 8080.
 	http.ListenAndServe(":8080", r)
 }
+
+
