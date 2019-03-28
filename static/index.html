@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>People database</title>
-  
+
   <style>
     /* Styling for our table */
     table.people {
@@ -15,12 +15,13 @@
       width: 100%;
     }
 
-    table.people td, th {
+    table.people td,
+    th {
       border: 1px solid #ddd;
       padding: 8px;
     }
 
-    table.people tr:nth-child(even){
+    table.people tr:nth-child(even) {
       background-color: #f2f2f2;
     }
 
@@ -67,7 +68,6 @@
       background-color: #f2f2f2;
       padding: 20px;
     }
-    
   </style>
 </head>
 
@@ -83,7 +83,7 @@
       <th>Occupation</th>
     </tr>
   </table>
-  <br/>
+  <br />
 
   <!-- 
     Specify the user input form. Upon submission, the form will
@@ -95,11 +95,11 @@
       <h3>Add new person</h3>
       Name:
       <input type="text" name="name">
-      <br/>Birthday:
+      <br />Birthday:
       <input type="text" name="birthday">
-      <br/> Occupation:
+      <br /> Occupation:
       <input type="text" name="occupation">
-      <br/>
+      <br />
       <input type="submit" value="Submit">
     </form>
   </div>
@@ -117,9 +117,9 @@
       .then(personList => {
         personList.forEach(person => {
           // Create the table row
-          row = document.createElement("tr") 
+          row = document.createElement("tr")
           // Create the table data elements and extract corresponding values from received `person`
-          var name = document.createElement("td") 
+          var name = document.createElement("td")
           name.innerHTML = person.name
           birthday = document.createElement("td")
           birthday.innerHTML = person.birthday

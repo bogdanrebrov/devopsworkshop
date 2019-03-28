@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	
 )
 
 // Person is a struct decsribing its properties
@@ -66,7 +65,6 @@ func getServerHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	
+
 	w.Write(serverHostNameBytes)
 }
-

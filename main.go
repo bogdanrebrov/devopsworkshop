@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"os"
 
-
 	"github.com/gorilla/mux"
 	// Import the `pq` package with a preceding underscore since it is imported as a side
 	// effect. The `pq` package is a GO Postgres driver for the `database/sql` package.
@@ -51,7 +50,7 @@ func initDb() {
 		"password=%s dbname=%s sslmode=disable",
 		config[dbhost], config[dbport],
 		config[dbuser], config[dbpass], config[dbname])
-	
+
 	db, err = sql.Open("postgres", psqlInfo)
 	if err != nil {
 		panic(err)
@@ -74,7 +73,7 @@ func dbConfig() map[string]string {
 	if !ok {
 		panic("DBHOST environment variable required but not set")
 	}
-	
+
 	user, ok := os.LookupEnv(dbuser)
 	if !ok {
 		panic("DBUSER environment variable required but not set")
@@ -95,13 +94,11 @@ func dbConfig() map[string]string {
 	return conf
 }
 
-
 func main() {
-	
+
 	initDb()
-	
+
 	store = &dbStore{db: db}
-	
 
 	// Create router
 	r := newRouter()
@@ -109,5 +106,3 @@ func main() {
 	// Listen to the port. Go server's default port is 8080.
 	http.ListenAndServe(":8080", r)
 }
-
-
