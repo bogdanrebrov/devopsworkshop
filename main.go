@@ -5,8 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"html/template"
-	"log"
+
 
 	"github.com/gorilla/mux"
 	// Import the `pq` package with a preceding underscore since it is imported as a side
@@ -40,6 +39,7 @@ func newRouter() *mux.Router {
 	r.Handle("/", staticFileHandler).Methods("GET")
 	// Add handler for `get` and `post` people functions
 	r.HandleFunc("/person", getPersonHandler).Methods("GET")
+	r.HandleFunc("/server", getServerHandler).Methods("GET")
 	r.HandleFunc("/person", createPersonHandler).Methods("POST")
 
 	return r
@@ -97,30 +97,7 @@ func dbConfig() map[string]string {
 
 
 func main() {
-	log.SetFlags(log.Lshortfile)
-
-	serverHostName, err := os.Hostname()
-	if err != nil {
-		panic(err)
-	}
-
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		tmpl, err := template.ParseFiles("index.html")
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-		}
-
-		data := struct {
-			ServerHostName string
-		}{
-			ServerHostName : serverHostName,
-		}
-
-		err = tmpl.Execute(w, data)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-		}
-	})
+	
 	initDb()
 	
 	store = &dbStore{db: db}

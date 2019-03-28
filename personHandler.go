@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
+	
 )
 
 // Person is a struct decsribing its properties
@@ -55,3 +57,16 @@ func createPersonHandler(w http.ResponseWriter, r *http.Request) {
 	//Redirect to the originating HTML page
 	http.Redirect(w, r, "/", http.StatusFound)
 }
+
+func getServerHandler(w http.ResponseWriter, r *http.Request) {
+	serverHostName, err := os.Hostname()
+	serverHostNameBytes, err := json.Marshal(serverHostName)
+	if err != nil {
+		fmt.Println(fmt.Errorf("Error: %v", err))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	
+	w.Write(serverHostNameBytes)
+}
+
