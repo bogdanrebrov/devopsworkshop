@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"html/template"
+	"log"
 
 	"github.com/gorilla/mux"
 	// Import the `pq` package with a preceding underscore since it is imported as a side
@@ -93,10 +95,36 @@ func dbConfig() map[string]string {
 	return conf
 }
 
+
 func main() {
+	log.SetFlags(log.Lshortfile)
+
+	serverHostName, err := os.Hostname()
+	if err != nil {
+		panic(err)
+	}
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		tmpl, err := template.ParseFiles("index.html")
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+
+		data := struct {
+			ServerHostName string
+		}{
+			ServerHostName : serverHostName,
+		}
+
+		err = tmpl.Execute(w, data)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+	})
 	initDb()
 	
 	store = &dbStore{db: db}
+	
 
 	// Create router
 	r := newRouter()
