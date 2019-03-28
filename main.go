@@ -96,7 +96,7 @@ func dbConfig() map[string]string {
 
 func main() {
 
-	//initDb()
+	initDb()
 
 	store = &dbStore{db: db}
 
